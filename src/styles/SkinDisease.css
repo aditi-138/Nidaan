@@ -1,0 +1,64 @@
+/* Skin Disease Identifier Styling */
+
+.model-page-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fefaf6;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .model-page-container h2 {
+    text-align: center;
+    color: #9a031e;
+    margin-bottom: 25px;
+  }
+  
+  input[type="file"] {
+    display: block;
+    margin: 0 auto 20px auto;
+    padding: 10px;
+    font-size: 15px;
+  }
+  
+  button {
+    display: block;
+    margin: 0 auto;
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #9a031e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #7a0117;
+  }
+  
+  .result-container {
+    margin-top: 30px;
+    background-color: #fff3f3;
+    border-left: 5px solid #9a031e;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .result-container h3 {
+    color: #8b0000;
+    margin-bottom: 12px;
+  }
+  
+  .result-container pre {
+    background-color: #fff;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  

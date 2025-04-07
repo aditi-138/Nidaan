@@ -1,0 +1,84 @@
+/* Obesity Risk Predictor Styling */
+
+.model-page-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #e3f2fd; /* Light blue background */
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .model-page-container h2 {
+    color: #1565c0;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  
+  .model-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #0d47a1;
+  }
+  
+  .form-group input,
+  .form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: #42a5f5;
+    outline: none;
+  }
+  
+  button {
+    padding: 12px 20px;
+    font-size: 16px;
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #1565c0;
+  }
+  
+  .result-container {
+    margin-top: 30px;
+    background-color: #e1f5fe;
+    border-left: 5px solid #1e88e5;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .result-container h3 {
+    color: #0d47a1;
+    margin-bottom: 10px;
+  }
+  
+  .result-container p {
+    font-size: 15px;
+    color: #004d40;
+  }
+  
