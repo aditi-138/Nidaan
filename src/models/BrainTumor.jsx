@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../styles/braintumor.css";
+import "../styles/BrainTumor.css";
 
 const BrainTumor = () => {
   const [file, setFile] = useState(null);
@@ -17,7 +17,7 @@ const BrainTumor = () => {
         formData,
         {
           headers: {
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer `,
           },
         }
       );

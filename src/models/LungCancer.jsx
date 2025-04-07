@@ -36,7 +36,7 @@ const LungCancer = () => {
         { inputs: formData },
         {
           headers: {
-            Authorization: `Bearer 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`,
+            Authorization: `Bearer `,
           },
         }
       );
