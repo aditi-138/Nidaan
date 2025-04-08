@@ -3,15 +3,33 @@ import React, { useEffect, useRef, useState } from 'react';
 const Inbox = () => {
   const messagesRef = useRef(null);
   const [darkMode, setDarkMode] = useState(false);
+  const [newMessage, setNewMessage] = useState('');
+  const [messages, setMessages] = useState([
+    { type: 'received', text: 'Can be verified on any platform using docker' },
+    { type: 'sent', text: 'Your error message says permission denied, npm global installs must be given root privileges.' },
+  ]);
 
   useEffect(() => {
     if (messagesRef.current) {
       messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
     }
-  }, []);
+  }, [messages]);
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
+  };
+
+  const sendMessage = () => {
+    if (newMessage.trim() !== '') {
+      setMessages([...messages, { type: 'sent', text: newMessage.trim() }]);
+      setNewMessage('');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
+    }
   };
 
   const themeClass = darkMode ? 'bg-dark text-white' : 'bg-white text-dark';
@@ -53,114 +71,47 @@ const Inbox = () => {
               </div>
             </div>
             <div className="d-flex gap-2">
-              <button className="btn btn-outline-secondary btn-sm">
-                <i className="bi bi-search"></i>
-              </button>
-              <button className="btn btn-outline-secondary btn-sm">
-                <i className="bi bi-heart"></i>
-              </button>
-              <button className="btn btn-outline-secondary btn-sm">
-                <i className="bi bi-bell"></i>
-              </button>
+              <button className="btn btn-outline-secondary btn-sm"><i className="bi bi-search"></i></button>
+              <button className="btn btn-outline-secondary btn-sm"><i className="bi bi-heart"></i></button>
+              <button className="btn btn-outline-secondary btn-sm"><i className="bi bi-bell"></i></button>
             </div>
           </div>
 
           {/* Messages */}
           <div className={`flex-grow-1 overflow-auto p-3 ${themeClass}`} ref={messagesRef}>
-            {/* Received Message */}
-            <div className="d-flex align-items-end mb-3">
-              <img
-                src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb"
-                className="rounded-circle me-2"
-                width="40"
-                height="40"
-                alt="Avatar"
-              />
-              <div className={`p-2 rounded shadow-sm ${bubbleReceived}`}>
-                Can be verified on any platform using docker
-              </div>
-            </div>
-
-            {/* Sent Message */}
-            <div className="d-flex align-items-end justify-content-end mb-3">
-              <div className={`p-2 rounded shadow-sm me-2 ${bubbleSent}`} style={{ maxWidth: '75%' }}>
-                Your error message says permission denied, npm global installs must be given root privileges.
-              </div>
-              <img
-                src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b"
-                className="rounded-circle"
-                width="40"
-                height="40"
-                alt="Avatar"
-              />
-            </div>
-
-            {/* Multiple received messages */}
-            <div className="d-flex align-items-start mb-3">
-              <img
-                src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb"
-                className="rounded-circle me-2"
-                width="40"
-                height="40"
-                alt="Avatar"
-              />
-              <div className="d-flex flex-column gap-2">
-                <div className={`p-2 rounded shadow-sm ${bubbleReceived}`}>
-                  Command was run with root privileges. I'm sure about that.
+            {messages.map((msg, index) => (
+              <div
+                key={index}
+                className={`d-flex align-items-end mb-3 ${msg.type === 'sent' ? 'justify-content-end' : ''}`}
+              >
+                {msg.type === 'received' && (
+                  <img
+                    src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb"
+                    className="rounded-circle me-2"
+                    width="40"
+                    height="40"
+                    alt="Avatar"
+                  />
+                )}
+                <div
+                  className={`p-2 rounded shadow-sm ${msg.type === 'sent' ? bubbleSent : bubbleReceived} ${
+                    msg.type === 'sent' ? 'me-2' : ''
+                  }`}
+                  style={{ maxWidth: '75%' }}
+                >
+                  {msg.text}
                 </div>
-                <div className={`p-2 rounded shadow-sm ${bubbleReceived}`}>
-                  I've updated the description so it's more obvious now.
-                </div>
-                <div className={`p-2 rounded shadow-sm ${bubbleReceived}`}>
-                  FYI https://askubuntu.com/a/700266/510172
-                </div>
-                <div className={`p-2 rounded shadow-sm ${bubbleReceived}`}>
-                  Check the line above (it ends with a # so, I'm running it as root) <br />
-                  <code className="bg-dark text-white p-1 d-block rounded mt-1"># npm install -g @vue/devtools</code>
-                </div>
+                {msg.type === 'sent' && (
+                  <img
+                    src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b"
+                    className="rounded-circle"
+                    width="40"
+                    height="40"
+                    alt="Avatar"
+                  />
+                )}
               </div>
-            </div>
-
-            {/* Sent message */}
-            <div className="d-flex align-items-end justify-content-end mb-3">
-              <div className={`p-2 rounded shadow-sm me-2 ${bubbleSent}`} style={{ maxWidth: '75%' }}>
-                Any updates on this issue? I'm getting the same error when trying to install devtools. Thanks
-              </div>
-              <img
-                src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b"
-                className="rounded-circle"
-                width="40"
-                height="40"
-                alt="Avatar"
-              />
-            </div>
-
-            {/* Final exchange */}
-            <div className="d-flex align-items-end mb-3">
-              <img
-                src="https://images.unsplash.com/photo-1549078642-b2ba4bda0cdb"
-                className="rounded-circle me-2"
-                width="40"
-                height="40"
-                alt="Avatar"
-              />
-              <div className={`p-2 rounded shadow-sm ${bubbleReceived}`}>
-                Thanks for your message David. I thought I'm alone with this issue. Please, 👍 the issue to support it :)
-              </div>
-            </div>
-
-            <div className="d-flex align-items-end justify-content-end mb-3">
-              <div className={`p-2 rounded shadow-sm me-2 ${bubbleSent}`} style={{ maxWidth: '75%' }}>
-                Are you using sudo?
-              </div>
-              <img
-                src="https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b"
-                className="rounded-circle"
-                width="40"
-                height="40"
-                alt="Avatar"
-              />
-            </div>
+            ))}
           </div>
 
           {/* Chat Input */}
@@ -170,8 +121,11 @@ const Inbox = () => {
                 type="text"
                 className={`form-control ${darkMode ? 'bg-dark text-white border-secondary' : ''}`}
                 placeholder="Type a message..."
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={handleKeyPress}
               />
-              <button className="btn btn-primary">Send</button>
+              <button className="btn btn-primary" onClick={sendMessage}>Send</button>
             </div>
           </div>
         </div>

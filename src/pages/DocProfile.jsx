@@ -13,7 +13,7 @@ export default function DocProfile() {
           {/* Profile Image */}
           <div className="col-md-4 text-center">
             <img
-              src={doctorImg}
+              src={doctor-illustration}
               alt="Doctor"
               className="img-fluid rounded-circle shadow"
               style={{ width: "200px", height: "200px", objectFit: "cover" }}

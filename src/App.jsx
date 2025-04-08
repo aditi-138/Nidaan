@@ -44,7 +44,10 @@ function App() {
         {/* Public Routes */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<DocLogin />} />
-
+  
+        <Route path="/dochome" element={<DocHome />} />
+        <Route path="/docpatient" element={<DocPatient/>} />
+        <Route path="/docprofile" element={<DocProfile />} />
         {/* Private Routes with Layout */}
         <Route path="/home" element={<Layout><DocHome /></Layout>} />
         <Route path="/feed" element={<Layout><DocFeed /></Layout>} />

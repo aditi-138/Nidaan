@@ -1,8 +1,11 @@
+// src/pages/DocLogin.jsx
+
 import React, { useState } from 'react';
-import { auth } from '../firebase/config';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, googleProvider, db } from '../firebase/config';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar'; // ✅ Correct import
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import Sidebar from '../components/Sidebar';
 
 const DocLogin = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +15,7 @@ const DocLogin = () => {
 
   const navigate = useNavigate();
 
+  // Handle Email/Password Auth
   const handleAuth = async (e) => {
     e.preventDefault();
     try {
@@ -26,9 +30,36 @@ const DocLogin = () => {
     }
   };
 
+  // ✅ Handle Google Login + Save to Firestore
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      // Check if user exists in Firestore
+      const userRef = doc(db, "doctors", user.uid);
+      const userSnap = await getDoc(userRef);
+
+      // If not exists, create new doctor entry
+      if (!userSnap.exists()) {
+        await setDoc(userRef, {
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          createdAt: new Date()
+        });
+      }
+
+      navigate('/dochome');
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <div className="d-flex vh-100">
-      <Sidebar /> {/* ✅ Sidebar is shown on the left */}
+      <Sidebar />
 
       <div
         className="d-flex align-items-center justify-content-center flex-grow-1 text-black"
@@ -66,16 +97,28 @@ const DocLogin = () => {
             <button className="btn btn-primary w-100" type="submit">
               {isRegistering ? 'Register' : 'Login'}
             </button>
-            <div className="text-center mt-2">
-              <button
-                type="button"
-                className="btn btn-link text-decoration-none"
-                onClick={() => setIsRegistering(!isRegistering)}
-              >
-                {isRegistering ? 'Already have an account? Login' : 'New here? Register'}
-              </button>
-            </div>
           </form>
+
+          {/* ✅ Google Sign In Button */}
+          <div className="text-center mt-3">
+            <button
+              onClick={handleGoogleLogin}
+              className="btn btn-outline-dark w-100"
+            >
+              <img src="/images/googleicon.png" alt="Google" style={{ width: "20px", marginRight: "8px" }} />
+              Sign in with Google
+            </button>
+          </div>
+
+          <div className="text-center mt-2">
+            <button
+              type="button"
+              className="btn btn-link text-decoration-none"
+              onClick={() => setIsRegistering(!isRegistering)}
+            >
+              {isRegistering ? 'Already have an account? Login' : 'New here? Register'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
